@@ -51,26 +51,28 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="#">Patient</a>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
+                    <a href="#">Doctor</a>
                 </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
+                
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
+                        {% comment %} {%if user.is_authenticated %} {% endcomment %}
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="#">Logout</a>
+                        </li>
+                        
+                        {% comment %} {%else%} {% endcomment %}
+                        <li>
+                            <a href="/login">Login</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="/register">Sign Up</a>
                         </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
+                        {% comment %} {%endif%} {% endcomment %}
                     </ul>
                 </li>
             </ul>
