@@ -19,11 +19,7 @@
             
             <!-- Add Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#carouselExampleIndicators').carousel();
-        });
-        </script>
+
 </head>
 
 <body>
@@ -31,7 +27,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
+                <img src="{% static 'img/logo.png' %}" height="30" alt="Logo" style="background-color: white !important; border-radius: 3px;">
             </div>
 
             <ul class="list-unstyled components">
@@ -50,29 +46,31 @@
                         </li>
                     </ul>
                 </li>
+                {%if user.is_authenticated %}
                 <li>
                     <a href="#">Patient</a>
                 </li>
                 <li>
                     <a href="#">Doctor</a>
                 </li>
+                {%endif%}
                 
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
-                        {% comment %} {%if user.is_authenticated %} {% endcomment %}
+                        {%if user.is_authenticated %} 
                         <li>
-                            <a href="#">Logout</a>
+                            <a href="{% url 'logout' %}">Logout</a>
                         </li>
                         
-                        {% comment %} {%else%} {% endcomment %}
+                        {%else%}
                         <li>
                             <a href="/login">Login</a>
                         </li>
                         <li>
                             <a href="/register">Sign Up</a>
                         </li>
-                        {% comment %} {%endif%} {% endcomment %}
+                        {%endif%}
                     </ul>
                 </li>
             </ul>
@@ -88,7 +86,7 @@
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span>Menu</span>
+                        <span>Main Menu</span>
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
