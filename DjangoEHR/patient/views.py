@@ -27,3 +27,17 @@ def register(response):
         form = RegisterForm()
 
         return render(response, "patient/register.html", {"form":form})
+
+
+
+def patientinformation(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("/home")
+    else:
+        form = RegisterForm()
+
+        return render(response, "patient/register.html", {"form":form})
+
