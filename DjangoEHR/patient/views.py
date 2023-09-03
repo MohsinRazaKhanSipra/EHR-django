@@ -32,12 +32,12 @@ def register(response):
 
 def patientinformation(response):
     if response.method == "POST":
-        form = RegisterForm(response.POST)
+        form = PatientForm(response.POST)
         if form.is_valid():
             form.save()
         return redirect("/home")
     else:
-        form = RegisterForm()
+        form = PatientForm()
 
         return render(response, "patient/patient.html", {"form":form})
 

@@ -3,18 +3,15 @@ from django.contrib.auth.models import User
 from django import forms
 
 from .models import *
+from django import forms
 
-class RegisterForm(UserCreationForm):
+class PatientForm(forms.ModelForm):
     email = forms.EmailField()
-
     class Meta:
-        model = User
-        fields = ["username", "email", "password1", "password2"]
+        model = Patient
+        fields = [ "name", 'email']
 
-class PatientForm(UserCreationForm):
-    email = forms.EmailField()
 
-    class Meta:
-        model = PatientProfile
-        fields = ["email", "name" ]
+ 
+
 

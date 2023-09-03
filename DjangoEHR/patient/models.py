@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+import random
+import string
 
 class Receptionist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True, blank = True)
@@ -21,11 +23,13 @@ class Doctor(models.Model):
         return self.user.username
 
 class Patient(models.Model):
-    date_of_birth = models.DateField()
+
+    
+    name = models.CharField(max_length=25, blank=True, null = True)
+    date_of_birth = models.DateField(blank=True, null = True)
     address = models.TextField()
-    # contact_number = models.CharField(max_length=20)
+    MRN =''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20))
     medical_history = models.TextField(blank=True)
-    #email
     email = models.TextField(blank=True, null = True)
 
     def __str__(self):

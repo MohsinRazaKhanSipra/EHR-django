@@ -7,8 +7,9 @@
 
 <form method="post">
   {% csrf_token %}
-  {{ form|crispy }}
-  <a type = 'submit' class="btn btn-primary">Submit</a>
-  <p>Don't have an accoount? Create one <a href="/register">here</a></p>
+  {{ form |crispy }}
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  
 </form>
 {% endblock %}
