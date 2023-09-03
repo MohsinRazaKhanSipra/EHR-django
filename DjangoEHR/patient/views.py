@@ -39,5 +39,5 @@ def patientinformation(response):
     else:
         form = RegisterForm()
 
-        return render(response, "patient/register.html", {"form":form})
+        return render(response, "patient/patient.html", {"form":form})
 

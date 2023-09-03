@@ -1,3 +1,14 @@
-{% extends "patient/base.html" %}
-{% block content %}
+{%extends "patient/base.html"%}
+{%block content%}
+{% load crispy_forms_tags %}
+<h2>Patient Information</h2>
+<br>
+<br>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <a type = 'submit' class="btn btn-primary">Submit</a>
+  <p>Don't have an accoount? Create one <a href="/register">here</a></p>
+</form>
 {% endblock %}

@@ -39,6 +39,6 @@ class PatientProfile(models.Model):
     diagnosis = models.CharField(max_length=100, blank=True, null = True)
     drug = models.CharField(max_length=100, blank=True, null = True)
     healthCondition = models.CharField(max_length=100, blank=True, null = True)
-    weight = models.IntegerField(max_length=4, blank=True, null = True)
+    weight = models.IntegerField( blank=True, null = True)
     height = models.FloatField(blank=True, null = True)
     pregnancy = models.BooleanField(blank=True, null = True)

@@ -11,3 +11,4 @@ def create_receptionist(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_receptionist(sender, instance, **kwargs):
     instance.receptionist.save()
+ 
