@@ -1,407 +1,144 @@
-{%load static%}
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Techsasoft</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-        
-        <!-- Bootstrap Font Icon CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
-      
+    <!-- Add jQuery (required by Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-      :root {
-        --header-height: 3rem;
-        --nav-width: 68px;
-        --first-color: #4723d9;
-        --first-color-light: #afa5d9;
-        --white-color: #f7f6fb;
-        --body-font: "Nunito", sans-serif;
-        --normal-font-size: 1rem;
-        --z-fixed: 100;
-      }
+    <!-- Add Popper.js (required by Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 
-      *,
-      ::before,
-      ::after {
-        box-sizing: border-box;
-      }
+    <!-- Add Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      body {
-        position: relative;
-        margin: var(--header-height) 0 0 0;
-        padding: 0 1rem;
-        font-family: var(--body-font);
-        font-size: var(--normal-font-size);
-        transition: 0.5s;
-      }
-
-      a {
-        text-decoration: none;
-      }
-
-      .header {
-        width: 100%;
-        height: var(--header-height);
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 1rem;
-        background-color: var(--white-color);
-        z-index: var(--z-fixed);
-        transition: 0.5s;
-      }
-
-      .header_toggle {
-        color: var(--first-color);
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-
-
-      
-
-      .l-navbar {
-        position: fixed;
-        top: 0;
-        left: -30%;
-        width: var(--nav-width);
-        height: 100vh;
-        background-color: var(--first-color);
-        padding: 0.5rem 1rem 0 0;
-        transition: 0.5s;
-        z-index: var(--z-fixed);
-      }
-
-      .nav {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow: hidden;
-      }
-
-      .nav_logo,
-      .nav_link {
-        display: grid;
-        grid-template-columns: max-content max-content;
-        align-items: center;
-        column-gap: 1rem;
-        padding: 0.5rem 0 0.5rem 1.5rem;
-      }
-
-      .nav_logo {
-        margin-bottom: 2rem;
-      }
-
-      .nav_logo-icon {
-        font-size: 1.25rem;
-        color: var(--white-color);
-      }
-
-      .nav_logo-name {
-        color: var(--white-color);
-        font-weight: 700;
-      }
-
-      .nav_link {
-        position: relative;
-        color: var(--first-color-light);
-        margin-bottom: 1.5rem;
-        transition: 0.3s;
-      }
-
-      .nav_link:hover {
-        color: var(--white-color);
-      }
-
-      .nav_icon {
-        font-size: 1.25rem;
-      }
-
-      .show {
-        left: 0;
-      }
-
-      .body-pd {
-        padding-left: calc(var(--nav-width) + 1rem);
-      }
-
-      .active {
-        color: var(--white-color);
-      }
-
-      .active::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        width: 2px;
-        height: 32px;
-        background-color: var(--white-color);
-      }
-
-      .height-100 {
-        height: 100vh;
-      }
-
-      @media screen and (min-width: 768px) {
-        body {
-          margin: calc(var(--header-height) + 1rem) 0 0 0;
-          padding-left: calc(var(--nav-width) + 2rem);
-        }
-
-        .header {
-          height: calc(var(--header-height) + 1rem);
-          padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
-        }
-
-        .header_img {
-          width: 40px;
-          height: 40px;
-        }
-
-        .header_img img {
-          width: 45px;
-        }
-
-        .l-navbar {
-          left: 0;
-          padding: 1rem 1rem 0 0;
-        }
-
-        .show {
-          width: calc(var(--nav-width) + 156px);
-        }
-
-        .body-pd {
-          padding-left: calc(var(--nav-width) + 188px);
-        }
-        .classic{
-         
-          position: absolute;
-          top:40%;
-          left: 92.6%;
-          height: 35px;
-
-        }
-        .accordion-item {
-            background-color: #5c3bdf;
-        }
-        .accordian-button-icon{
-          background-color: black;
-        }
-
-      }
-    </style>
-    
-  </head>
-  <body id="body-pd">
-    <header class="header" id="header">
-      <div class="header_toggle">
-        <i class="bx bx-menu" id="header-toggle"></i>
-      </div>
-      
-        <div class = "classic">
-          <i class="bi bi-bell"></i>
-
-        </div>
-        <div class="dropdown">
-          <button
-            class="btn btn-primary btn-floating dropdown-toggle hidden-arrow bg-dark"
-            type="button"
-            id="dropdownMenuButton2"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="fas fa-ellipsis-v fa-lg"></i>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Settings</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
-          </ul>
-        </div>
-        
-      
-    </header>
-    
-    
-    <div class="l-navbar" id="nav-bar">
-      <nav class="nav">
-        <div>
-          <a href="#" class="nav_logo">
-            <i class="bx bx-layer nav_logo-icon"></i>
-            <span class="nav_logo-name">Techsasoft</span>
-          </a>
-          <div class="input-group rounded" style="background-color: var(--first-color);">
-            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="background-color: var(--first-color); border-color: var(--first-color-light); color: var(--white-color);" />
-            
-            <span class="input-group-text border-0" id="search-addon" style="background-color: var(--first-color); border-color: var(--first-color-light); color: var(--white-color);">
-                <i class="fas fa-search"></i>
-            </span>
-        </div>
-        <br>
-        <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="none" aria-controls="collapseOne">
-                Accordion Item #1
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <a href="/patientinformation" class="accordion-button">
-                  Create Patient
-                </a>
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Patient List
-                </button>
-              </div>
-              
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Accordion Item #2
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Accordion Item #3
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
-        </div>
-          
-          
-            {% comment %} <div class = "dropdown-btn">
-              <a href="#" class="nav_link">
-                <i class="bx bx-user nav_icon"></i>
-                <span class="nav_name">Patients</span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-              
-            </div> {% endcomment %}
-
-            {% comment %} </div>
-            <a href="#" class="nav_link">
-              <i class="bx bx-bookmark nav_icon"></i>
-              <span class="nav_name">Appointments</span>
-            </a>
-            <a href="#" class="nav_link">
-              <i class="bx bx-folder nav_icon"></i>
-              <span class="nav_name">Records</span>
-            </a>
-            {%if user.is_authenticated%}
-            {%else%}
-            <a href="/register" class="nav_link">
-              <i class="bx bx-message-square-detail nav_icon"></i>
-              <span class="nav_name">Sign Up</span>
-            </a>
-            <a href="/login" class="nav_link">
-              <i class="bx bx-bar-chart-alt-2 nav_icon"></i>
-              <span class="nav_name">Login</span>
-            {%endif%} {% endcomment %}
-
-            </a>
-          </div>
-        </div>
-        {%if user.is_authenticated%}
-        <a href="{%url "logout"%}" class="nav_link">
-          <i class="bx bx-log-out nav_icon"></i>
-          <span class="nav_name">Sign out</span>
-        </a>
-        {%endif%}
-        
-
-      </nav>
-    </div>
-    <div class="height-100 bg-light">   
-      
-        
-        {%block content%}
-        {%endblock%}
-
-    </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
+    <!-- Your custom JavaScript or additional dependencies can go here -->
     <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded", function (event) {
-        const showNavbar = (toggleId, navId, bodyId, headerId) => {
-          const toggle = document.getElementById(toggleId),
-            nav = document.getElementById(navId),
-            bodypd = document.getElementById(bodyId),
-            headerpd = document.getElementById(headerId);
+              $(document).ready(function() {
+          $('.nav-link-collapse').on('click', function() {
+            $('.nav-link-collapse').not(this).removeClass('nav-link-show');
+            $(this).toggleClass('nav-link-show');
+          });
+        });
 
-          // Validate that all variables exist
-          if (toggle && nav && bodypd && headerpd) {
-            toggle.addEventListener("click", () => {
-              // show navbar
-              nav.classList.toggle("show");
-              // change icon
-              toggle.classList.toggle("bx-x");
-              // add padding to body
-              bodypd.classList.toggle("body-pd");
-              // add padding to header
-              headerpd.classList.toggle("body-pd");
-            });
-          }
-        };
-
-        showNavbar("header-toggle", "nav-bar", "body-pd", "header");
-
-        /*===== LINK ACTIVE =====*/
-        const linkColor = document.querySelectorAll(".nav_link");
-
-        function colorLink() {
-          if (linkColor) {
-            linkColor.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-          }
-        }
-        linkColor.forEach((l) => l.addEventListener("click", colorLink));
-
-        // Your code to run since DOM is loaded and ready
-      });
     </script>
-    
-  </body>
+  <style>
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+  
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">Sidebar Nav</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/home">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link nav-link-collapse"
+            href="#"
+            id="hasSubItems"
+            data-toggle="collapse"
+            data-target="#collapseSubItems2"
+            aria-controls="collapseSubItems2"
+            aria-expanded="false"
+          >Patient</a>
+          <ul class="nav-second-level collapse" id="collapseSubItems2" data-parent="#navAccordion">
+            <li class="nav-item">
+              <a class="nav-link" href="/patient">
+                <span class="nav-link-text">Create Patient</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/patientlist">
+                <span class="nav-link-text">Patient List</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Item 3</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link nav-link-collapse"
+            href="#"
+            id="hasSubItems"
+            data-toggle="collapse"
+            data-target="#collapseSubItems4"
+            aria-controls="collapseSubItems4"
+            aria-expanded="false"
+          >Item 4</a>
+          <ul class="nav-second-level collapse" id="collapseSubItems4" data-parent="#navAccordion">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="nav-link-text">Item 4.1</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="nav-link-text">Item 4.2</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="nav-link-text">Item 4.2</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Item 5</a>
+        </li>
+      </ul>
+      <form class="form-inline ml-auto mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+  
+  <main class="content-wrapper">
+    <div class="container-fluid">
+      <h1>Main Content</h1>
+
+      {% comment %} {%block content%}
+      {%%} {% endcomment %}
+
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="container">
+        <div class="text-center">
+            <span>Coded by <a href="https://si-dev.com/ru">SI-Dev</a>, 2018</span>
+        </div>
+    </div>
+  </footer>
+</body>
 </html>
