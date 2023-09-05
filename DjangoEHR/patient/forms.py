@@ -23,7 +23,7 @@ class DoctorForm(forms.ModelForm):
     # email = forms.EmailField()
     class Meta:
         model = Doctor
-        fields = ["specialization" , "license_number","contact_number" ]
+        fields = ["name", "specialization" , "license_number","contact_number" ]
 
 
  

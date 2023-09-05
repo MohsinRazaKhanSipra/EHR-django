@@ -1,7 +1,6 @@
 {% extends "patient/base.html" %}
 {% block content %}
-
-<link
+ <link
     href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"
     rel="stylesheet"
 />
@@ -17,7 +16,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- Include DataTables Bootstrap JavaScript library -->
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script> 
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -59,15 +58,37 @@
                 <td>{{x.email}}</td>
                 <td>{{x.MRN}}</td>
 
-                {% comment %} <td><a href="update/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>edit</a></td> {% endcomment %}
+{% comment %}                 
                 <td>
                     <button href="update/{{x.id}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id = '{{x.id}}'>
                         edit
                   </button>
-                </td>
+                </td> {% endcomment %}
                   
-                <td><a href="delete/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>delete</a></td>
-                
+                <td><a href="update/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>update</a></td>
+                <td><a href="delete/{{x.id}}" class="btn btn-danger" id = '{{x.id}}' data-toggle="modal" data-target="#exampleModal">delete</a></td>
+                                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        ...
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                    </div>
+
+                                
                     
 
             </tr>
