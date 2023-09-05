@@ -5,6 +5,7 @@
 <br>
 <br>
 
+ <div id = "parent">
 <form method="post">
   {% csrf_token %}
   {{ form |crispy }}
@@ -12,4 +13,5 @@
   <button type="submit" class="btn btn-primary" style = "background-color: #5c3bdf; border-color: #5c3bdf">Submit</button>
   
 </form>
+
 {% endblock %}

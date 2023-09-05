@@ -40,9 +40,12 @@
             <tr style = "text-align:center">
                 <th>ID</th>
                 <th>Name</th>
-                <th>Gender</th>
-                <th>Delete</th>
-                <th>Update</th>
+                <th>Specialization</th>
+                <th>License Number</th>
+                <th>Contact Number</th>
+                <th></th>
+                <th></th>
+
 
             </tr>
         </thead>
@@ -52,7 +55,10 @@
                 <td>{{x.id}}</td>
 
                 <td>{{x.name}}</td>
-                <td>{{x.gender}}</td>
+                <td>{{x.specialization}}</td>
+                <td>{{x.license_number}}</td>
+                <td>{{x.contact_number}}</td>
+
                 <td><a href="update/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>edit</a></td>
                 <td><a href="delete/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>delete</a></td>
                 
