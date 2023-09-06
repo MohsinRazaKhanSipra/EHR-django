@@ -1,6 +1,9 @@
 {%extends "patient/base.html"%}
 {%block content%}
 {% load crispy_forms_tags %}
+<br>
+<br>
+<br>
 
 <h2>Patient information</h2>
 <br>
@@ -9,6 +12,9 @@
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
+<br>
+<br>
+
   <button type="submit" style = "background-color: #5c3bdf;">Log In</button>
 </form>
 {% endblock %}

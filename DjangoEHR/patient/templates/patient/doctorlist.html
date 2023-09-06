@@ -1,14 +1,8 @@
 {% extends "patient/base.html" %}
 {% block content %}
-
-<link
-    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"
-    rel="stylesheet"
-/>
-<link
-    href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css"
-    rel="stylesheet"
-/>
+{% load crispy_forms_tags %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -17,12 +11,48 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- Include DataTables Bootstrap JavaScript library -->
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script> 
+
+<!-- Include Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
         // Initialize DataTable
-        $('#example').DataTable();
+        var dataTable = $('#example').DataTable();
+
+        // Open the update modal when the edit button is clicked
+        $('#example').on('click', 'a.edit-button', function () {
+            var patientId = $(this).attr('data-id');
+            $.ajax({
+                type: 'GET',
+                url: 'get_patient/' + patientId,
+                success: function (data) {
+                    $('#patientId').val(patientId);
+                    $('#updatePatientForm input[name="name"]').val(data.name);
+                    $('#updatePatientForm input[name="specialization"]').val(data.specialization);
+                    $('#updatePatientForm input[name="license_number"]').val(data.license_number);
+                    $('#updatePatientForm input[name="contact_number"]').val(data.contact_number);
+                    $('#updatePatientModal').modal('show');
+                }
+            });
+        });
+
+        // Handle form submission for updating patient information
+        $('#updatePatientForm').on('submit', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            var patientId = $('#patientId').val();
+            $.ajax({
+                type: 'POST',
+                url: 'update_patient/' + patientId,
+                data: formData,
+                success: function () {
+                    $('#updatePatientModal').modal('hide');
+                    dataTable.ajax.reload();
+                }
+            });
+        });
     });
 </script>
 <br>
@@ -32,40 +62,67 @@
 <br>
 <br>
 <br>
+<br>
 
-
-<div class="container" style = "text-align:center">
+<div class="container" style="text-align:center">
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
-            <tr style = "text-align:center">
+            <tr style="text-align:center">
                 <th>ID</th>
                 <th>Name</th>
                 <th>Specialization</th>
                 <th>License Number</th>
                 <th>Contact Number</th>
-                <th></th>
-                <th></th>
 
-
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            {%for x in information%}
+            {% for x in information %}
             <tr>
-                <td>{{x.id}}</td>
+                <td>{{ x.id }}</td>
+                <td>{{ x.name }}</td>
 
-                <td>{{x.name}}</td>
-                <td>{{x.specialization}}</td>
-                <td>{{x.license_number}}</td>
-                <td>{{x.contact_number}}</td>
+                <td>{{ x.specialization }}</td>
+                <td>{{ x.license_number }}</td>
+                <td>{{ x.contact_number }}</td>
 
-                <td><a href="update/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>edit</a></td>
-                <td><a href="delete/{{x.id}}" class="btn btn-danger" id = '{{x.id}}'>delete</a></td>
-                
+                <td>
+                    <a href="update/{{ x.id }}" class="btn btn-danger edit-button" data-id="{{ x.id }}" data-toggle="modal" data-target="#updatePatientModal">Update</a>
+                </td>
+                <td>
+                    <a href="delete/{{ x.id }}" class="btn btn-danger" id="deleteBtn{{ x.id }}">Delete</a>
+                </td>
             </tr>
-            {%endfor%}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-        </table>
+<!-- Modal for updating patient information -->
+<div class="modal fade" id="updatePatientModal" tabindex="-1" role="dialog" aria-labelledby="updatePatientModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePatientModalLabel">Update Patient Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updatePatientForm" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="hidden" id="patientId" name="patientId" value="">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

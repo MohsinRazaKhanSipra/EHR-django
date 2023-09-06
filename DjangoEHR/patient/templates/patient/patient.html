@@ -1,17 +1,33 @@
-{%extends "patient/base.html"%}
-{%block content%}
+{% extends "patient/base.html" %}
+{% block content %}
 {% load crispy_forms_tags %}
-<h2>Patient Information</h2>
+<style>
+  #parent {
+    text-align: center;
+  }
+  /* Center the form horizontally */
+  form {
+    display: inline-block;
+    text-align: left;
+    
+  }
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div id="parent">
+  <h2>Patient Information</h2>
 <br>
 <br>
 
- <div id = "parent">
-<form method="post">
-  {% csrf_token %}
-  {{ form |crispy }}
-  <br>
-  <button type="submit" class="btn btn-primary" style = "background-color: #5c3bdf; border-color: #5c3bdf">Submit</button>
-  
-</form>
-
+  <form method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <br>
+    <button type="submit" class="btn btn-primary" style="background-color: #5c3bdf; border-color: #5c3bdf">Submit</button>
+  </form>
+</div>
 {% endblock %}

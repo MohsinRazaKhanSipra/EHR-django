@@ -1,14 +1,8 @@
 {% extends "patient/base.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
- <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"
-    rel="stylesheet"
-/>
-<link
-    href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css"
-    rel="stylesheet"
-/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -19,24 +13,9 @@
 <!-- Include DataTables Bootstrap JavaScript library -->
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script> 
 
-
-<!-- Include jQuery library -->
-
-
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-{% comment %} <script>
-$('#myModal').on('shown.bs.modal', function () {
-    $('#myInput').trigger('focus')
-  })
-</script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        // Initialize DataTable
-        $('#example').DataTable();
-    });
-</script> {% endcomment %}
 <script type="text/javascript">
     $(document).ready(function () {
         // Initialize DataTable
@@ -47,13 +26,11 @@ $('#myModal').on('shown.bs.modal', function () {
             var patientId = $(this).attr('data-id');
             $.ajax({
                 type: 'GET',
-                url: 'get_patient/' + patientId, // Create a URL pattern for getting patient data
+                url: 'get_patient/' + patientId,
                 success: function (data) {
                     $('#patientId').val(patientId);
                     $('#updatePatientForm input[name="name"]').val(data.name);
-                    $('#updatePatientForm input[name="specialization"]').val(data.specialization);
-                    $('#updatePatientForm input[name="license_number"]').val(data.license_number);
-                    $('#updatePatientForm input[name="contact_number"]').val(data.contact_number);
+                    $('#updatePatientForm input[name="email"]').val(data.specialization);
                     $('#updatePatientModal').modal('show');
                 }
             });
@@ -66,11 +43,11 @@ $('#myModal').on('shown.bs.modal', function () {
             var patientId = $('#patientId').val();
             $.ajax({
                 type: 'POST',
-                url: 'update_patient/' + patientId, // Create a URL pattern for updating patient data
+                url: 'update_patient/' + patientId,
                 data: formData,
                 success: function () {
                     $('#updatePatientModal').modal('hide');
-                    dataTable.ajax.reload(); // Reload the DataTable after update
+                    dataTable.ajax.reload();
                 }
             });
         });
@@ -83,84 +60,62 @@ $('#myModal').on('shown.bs.modal', function () {
 <br>
 <br>
 <br>
+<br>
 
-
-<div class="container" style = "text-align:center">
+<div class="container" style="text-align:center">
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
-            <tr style = "text-align:center">
+            <tr style="text-align:center">
                 <th>ID</th>
-
                 <th>Name</th>
                 <th>Email</th>
                 <th>MRN</th>
                 <th>Update</th>
                 <th>Delete</th>
-
-
             </tr>
         </thead>
         <tbody>
-            
-                {% for x in information %}
-                <tr>
-                    <td>{{ x.id }}</td>
-                    <td>{{ x.name }}</td>
-                    <td>{{ x.email }}</td>
-                    <td>{{ x.MRN }}</td>
-                    <td>
-                        <a href="update/{{ x.id }}" class="btn btn-danger" id="updateBtn{{ x.id }}" data-toggle="modal" data-target="#exampleModal{{ x.id }}">Update</a>
-                    </td>
-                    <td>
-                        <a href="delete/{{ x.id }}" class="btn btn-danger" id="deleteBtn{{ x.id }}">Delete</a>
-                    </td>
-                    {% comment %} <!-- Modal -->
-                    <div class="modal fade" id="exampleModal{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        {{ form|crispy }}
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
-                    <div class="modal fade" id="updatePatientModal" tabindex="-1" role="dialog" aria-labelledby="updatePatientModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="updatePatientModalLabel">Update Patient Information</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form id="updatePatientForm" method="post">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <input type="hidden" id="patientId" name="patientId" value="">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                </tr>
-                {% endfor %}
+            {% for x in information %}
+            <tr>
+                <td>{{ x.id }}</td>
+                <td>{{ x.name }}</td>
+                <td>{{ x.email }}</td>
+                <td>{{ x.MRN }}</td>
+                <td>
+                    <a href="update/{{ x.id }}" class="btn btn-danger edit-button" data-id="{{ x.id }}" data-toggle="modal" data-target="#updatePatientModal">Update</a>
+                </td>
+                <td>
+                    <a href="delete/{{ x.id }}" class="btn btn-danger" id="deleteBtn{{ x.id }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-        </table>
+<!-- Modal for updating patient information -->
+<div class="modal fade" id="updatePatientModal" tabindex="-1" role="dialog" aria-labelledby="updatePatientModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePatientModalLabel">Update Patient Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updatePatientForm" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="hidden" id="patientId" name="patientId" value="">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

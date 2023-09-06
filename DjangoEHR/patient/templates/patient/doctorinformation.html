@@ -1,21 +1,33 @@
-{%extends "patient/base.html"%}
-{%block content%}
+{% extends "patient/base.html" %}
+{% block content %}
 {% load crispy_forms_tags %}
+<style>
+  #parent {
+    text-align: center;
+  }
+  /* Center the form horizontally */
+  form {
+    display: inline-block;
+    text-align: left;
+  }
+</style>
 <br>
 <br>
 <br>
 <br>
-<h2>Doctor Information</h2>
 <br>
 <br>
 <br>
-
-<form method="post">
-  {% csrf_token %}
-  {{ form|crispy }}
+<div id="parent">
+  <h2>Doctor Information</h2>
+<br>
+<br>
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
     <br>
-
-    <br>
-  <button type="submit" >Submit</button>
-</form>
+    <button type="submit">Submit</button>
+  </form>
+</div>
 {% endblock %}
