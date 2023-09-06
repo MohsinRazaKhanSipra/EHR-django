@@ -75,7 +75,7 @@ def doctorlist(request):
     else:
         form = DoctorForm()
     information = Doctor.objects.all()
-    return render(request, "patient/doctorlist.html", {"information":information})
+    return render(request, "patient/doctorlist.html", {"information":information, "form":form})
     
     
 
@@ -138,7 +138,32 @@ def get_patient(request, patient_id):
 
 
 @csrf_exempt
-def update_patient(request, patient_id):
+def patient_update(request, patient_id):
+    patient = Patient.objects.get(pk=patient_id)
+
+    if request.method == "POST":
+        form = PatientForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'error'})
+
+
+@csrf_exempt
+def get_patient(request, patient_id):
+    patient = Patient.objects.get(pk=patient_id)
+    data = {
+        'name': patient.name,
+        'specialization': patient.specialization,
+        'license_number': patient.license_number,
+        'contact_number': patient.contact_number,
+    }
+    return JsonResponse(data)
+
+
+@csrf_exempt
+def patient_update(request, patient_id):
     patient = Patient.objects.get(pk=patient_id)
 
     if request.method == "POST":
