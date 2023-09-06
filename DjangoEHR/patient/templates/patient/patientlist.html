@@ -25,7 +25,7 @@
 
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
+{% comment %} <script>
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
   })
@@ -35,6 +35,45 @@ $('#myModal').on('shown.bs.modal', function () {
     $(document).ready(function () {
         // Initialize DataTable
         $('#example').DataTable();
+    });
+</script> {% endcomment %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Initialize DataTable
+        var dataTable = $('#example').DataTable();
+
+        // Open the update modal when the edit button is clicked
+        $('#example').on('click', 'a.edit-button', function () {
+            var patientId = $(this).attr('data-id');
+            $.ajax({
+                type: 'GET',
+                url: 'get_patient/' + patientId, // Create a URL pattern for getting patient data
+                success: function (data) {
+                    $('#patientId').val(patientId);
+                    $('#updatePatientForm input[name="name"]').val(data.name);
+                    $('#updatePatientForm input[name="specialization"]').val(data.specialization);
+                    $('#updatePatientForm input[name="license_number"]').val(data.license_number);
+                    $('#updatePatientForm input[name="contact_number"]').val(data.contact_number);
+                    $('#updatePatientModal').modal('show');
+                }
+            });
+        });
+
+        // Handle form submission for updating patient information
+        $('#updatePatientForm').on('submit', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            var patientId = $('#patientId').val();
+            $.ajax({
+                type: 'POST',
+                url: 'update_patient/' + patientId, // Create a URL pattern for updating patient data
+                data: formData,
+                success: function () {
+                    $('#updatePatientModal').modal('hide');
+                    dataTable.ajax.reload(); // Reload the DataTable after update
+                }
+            });
+        });
     });
 </script>
 <br>
@@ -75,7 +114,7 @@ $('#myModal').on('shown.bs.modal', function () {
                     <td>
                         <a href="delete/{{ x.id }}" class="btn btn-danger" id="deleteBtn{{ x.id }}">Delete</a>
                     </td>
-                    <!-- Modal -->
+                    {% comment %} <!-- Modal -->
                     <div class="modal fade" id="exampleModal{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -97,7 +136,27 @@ $('#myModal').on('shown.bs.modal', function () {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
+                    <div class="modal fade" id="updatePatientModal" tabindex="-1" role="dialog" aria-labelledby="updatePatientModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="updatePatientModalLabel">Update Patient Information</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <form id="updatePatientForm" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="hidden" id="patientId" name="patientId" value="">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </tr>
                 {% endfor %}
 

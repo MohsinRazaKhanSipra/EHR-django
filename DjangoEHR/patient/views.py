@@ -4,7 +4,7 @@ from .models import Patient
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .forms import *
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def home(request):
     # if request.user.is_authenticated:
@@ -45,11 +45,14 @@ def patientinformation(response):
 
 # @login_required
 def patientlist(request):
-    
-    # info = Patient.objects.filter(user=request.user)
-
+    if request.method == "POST":
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = PatientForm()
     information = Patient.objects.all()
-    return render(request, "patient/patientlist.html",{"information":information})
+    return render(request, "patient/patientlist.html",{"information":information, "form":form})
 
 def doctorinformation(response):
     if response.method == "POST":
@@ -65,6 +68,12 @@ def doctorinformation(response):
 
     
 def doctorlist(request):
+    if request.method == "POST":
+        form = DoctorForm(request.POST, instance=image)
+        if form.is_valid():
+            form.save()
+    else:
+        form = DoctorForm()
     information = Doctor.objects.all()
     return render(request, "patient/doctorlist.html", {"information":information})
     
@@ -92,18 +101,18 @@ def doctor_delete(request, image_id):
     image_sel.delete()
     return redirect('doctorlist')
 
-def patient_update(request, patient_id):
-    patient = get_object_or_404(Patient, pk=patient_id)
+# def patient_update(request, patient_id):
+#     patient = get_object_or_404(Patient, pk=patient_id)
 
-    if request.method == "POST":
-        form = PatientForm(request.POST, request.FILES, instance=patient)
-        if form.is_valid():
-            form.save()
-            return redirect('patientlist')  # Redirect to the patient list page after a successful update
-    else:
-        form = PatientForm(instance=patient)
+#     if request.method == "POST":
+#         form = PatientForm(request.POST, request.FILES, instance=patient)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('patientlist')  # Redirect to the patient list page after a successful update
+#     else:
+#         form = PatientForm(instance=patient)
 
-    return render(request, "patient/patient_update.html", {"form": form, "patient": patient})
+#     return render(request, "patient/patient_update.html", {"form": form, "patient": patient})
 
 
 def patient_delete(request, image_id):
@@ -116,6 +125,27 @@ def patient_delete(request, image_id):
     return redirect('patientlist')
 
 
+@csrf_exempt
+def get_patient(request, patient_id):
+    patient = Patient.objects.get(pk=patient_id)
+    data = {
+        'name': patient.name,
+        'specialization': patient.specialization,
+        'license_number': patient.license_number,
+        'contact_number': patient.contact_number,
+    }
+    return JsonResponse(data)
 
 
+@csrf_exempt
+def update_patient(request, patient_id):
+    patient = Patient.objects.get(pk=patient_id)
+
+    if request.method == "POST":
+        form = PatientForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'error'})
 
