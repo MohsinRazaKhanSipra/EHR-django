@@ -1,5 +1,5 @@
 
-from django.urls import path, include
+from django.urls import path, include,re_path  
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -19,9 +19,14 @@ urlpatterns = [
     path("doctorlist/", views.doctorlist, name="doctorlist"),
 
     path("doctorlist/delete/<int:image_id>", views.doctor_delete, name="doctor_delete"),
-    path("doctorlist/update/<int:image_id>", views.doctor_update, name="doctor_update"),
+    path("patientlist/delete/<int:image_id>", views.patientlist, name="patientlist"),
 
-    path("patientlist/delete/<int:image_id>", views.patient_delete, name="doctor_delete"),
-    path("patientlist/update/<int:image_id>", views.patient_update, name="doctor_update"),
+    path('patientlist/update/<int:pk>', views.RoomUpdate.as_view(), name='patientlist_update'),
+    # path("doctorlist/update/<int:image_id>", views.doctor_update, name="doctor_update"),
+
+    # URL pattern for getting patient data for the modal
+    # path('get_patient/<int:patient_id>/', views.get_patient, name='get_patient'),
+
+    # # URL pattern for updating patient data via AJAX
+    # path('update_patient/<int:patient_id>/', views.update_patient, name='update_patient'),
 ]
-

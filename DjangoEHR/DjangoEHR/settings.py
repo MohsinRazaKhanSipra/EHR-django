@@ -33,8 +33,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     "django_htmx",
-       'dajaxice',
-   'dajax'
+    'dajaxice',
+    'dajax'
 ]
 
 MIDDLEWARE = [

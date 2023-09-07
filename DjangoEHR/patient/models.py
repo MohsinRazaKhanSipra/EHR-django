@@ -37,7 +37,7 @@ class Patient(models.Model):
     MRN = models.CharField(max_length=20, unique=True, null=True)  # Add a unique MRN field
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
     def save(self, *args, **kwargs):
@@ -45,9 +45,6 @@ class Patient(models.Model):
             # Generate an MRN if it doesn't exist
             self.MRN = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20))
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
 class PatientProfile(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE, null=True, blank=True)
@@ -57,7 +54,8 @@ class PatientProfile(models.Model):
     weight = models.IntegerField(blank=True, null=True)
     height = models.FloatField(blank=True, null=True)
     pregnancy = models.BooleanField(blank=True, null=True)
+    
     def __str__(self):
-        return self.patient
+        return str(self.id)
     
 
