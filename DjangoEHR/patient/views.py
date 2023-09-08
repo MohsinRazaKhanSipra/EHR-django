@@ -8,10 +8,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, DeleteView
 # Create your views here.
 def home(request):
-    # if request.user.is_authenticated:
-    #     image = UserProfile.objects.filter(user=request.user).first().profile_picture
-    #     if image:
-    #         request.session["image"] = image.url
 
     return render(request, "patient/home.html")
 
@@ -81,55 +77,41 @@ def doctorlist(request):
     
 
 
-def doctor_delete(request, image_id):
-    img_id = int(image_id)
+def doctor_delete(request, pk):
+    pk = pk
     try:
-        image_sel = Doctor.objects.get(id = img_id)
+        image_sel = Doctor.objects.get(pk = pk)
     except Doctor.DoesNotExist:
         return redirect('doctorlist')
     image_sel.delete()
     return redirect('doctorlist')
 
 
-def patient_delete(request, image_id):
-    img_id = int(image_id)
-    try:
-        image_sel = Patient.objects.get(id = img_id)
+def patient_delete(request, pk):
+    pk = pk
+    try:    
+        image_sel = Patient.objects.get(pk = pk)
     except Patient.DoesNotExist:
         return redirect('patientlist')
     image_sel.delete()
     return redirect('patientlist')
 
-class  RoomUpdate(View):
+class  PatientUpdate(View):
     def  post(self, request, pk):
         data =  dict()
-        room = Patient.objects.get(pk=pk)
-        form = PatientForm(instance=room, data=request.POST)
+        patient = Patient.objects.get(pk=pk)
+        form = PatientForm(instance=patient, data=request.POST)
         if form.is_valid():
-            room = form.save()
+            patient = form.save()
             
-        # information = Patient.objects.all()
-        # return render(request, "patient/patientlist.html",{"information":information, "form":form})
         return HttpResponse("working")
 
-
-
-# def get_patient(request, patient_id):
-#     patient = Patient.objects.get(pk=patient_id)
-#     data = {
-#         'name': patient.name,
-#         'email': patient.email,
-        
-#     }
-#     return JsonResponse(data)
-
-# def update_patient(request, patient_id):
-#     patient = Patient.objects.get(pk=patient_id)
-
-#     if request.method == "POST":
-#         form = PatientForm(request.POST, instance=patient)
-#         if form.is_valid():
-#             form.save()
-#             return JsonResponse({'status': 'success'})
-
-#     return JsonResponse({'status': 'error'})
+class  DoctorUpdate(View):
+    def  post(self, request, pk):
+        data =  dict()
+        doctor = Doctor.objects.get(pk=pk)
+        form = DoctorForm(instance=doctor, data=request.POST)
+        if form.is_valid():
+            doctor = form.save()
+            
+        return HttpResponse("working")

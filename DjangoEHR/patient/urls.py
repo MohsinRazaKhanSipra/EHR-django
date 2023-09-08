@@ -18,15 +18,10 @@ urlpatterns = [
     path("doctorinformation/", views.doctorinformation, name="doctorinformation"),
     path("doctorlist/", views.doctorlist, name="doctorlist"),
 
-    path("doctorlist/delete/<int:image_id>", views.doctor_delete, name="doctor_delete"),
-    path("patientlist/delete/<int:image_id>", views.patientlist, name="patientlist"),
+    path("doctorlist/delete/<int:pk>", views.doctor_delete, name="doctor_delete"),
+    path("patientlist/delete/<int:pk>", views.patient_delete, name="patient_delete"),
 
-    path('patientlist/update/<int:pk>', views.RoomUpdate.as_view(), name='patientlist_update'),
-    # path("doctorlist/update/<int:image_id>", views.doctor_update, name="doctor_update"),
+    path('patientlist/update/<int:pk>', views.PatientUpdate.as_view(), name='patientlist_update'),
+    path('doctorlist/update/<int:pk>', views.DoctorUpdate.as_view(), name='patientlist_update'),
 
-    # URL pattern for getting patient data for the modal
-    # path('get_patient/<int:patient_id>/', views.get_patient, name='get_patient'),
-
-    # # URL pattern for updating patient data via AJAX
-    # path('update_patient/<int:patient_id>/', views.update_patient, name='update_patient'),
 ]
