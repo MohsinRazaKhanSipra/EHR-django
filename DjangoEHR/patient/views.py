@@ -4,8 +4,9 @@ from .models import Patient
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, DeleteView
+from django.contrib import messages
+
 # Create your views here.
 def home(request):
 
@@ -29,7 +30,7 @@ def register(response):
 
 
 def patientinformation(response):
-    if response.method == "POST":
+    if response.method == "POST": 
         form = PatientForm(response.POST)
         if form.is_valid():
             form.save()
@@ -40,7 +41,6 @@ def patientinformation(response):
         return render(response, "patient/patient.html", {"form":form})
 
 
-# @login_required
 def patientlist(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
@@ -54,6 +54,10 @@ def patientlist(request):
 def doctorinformation(response):
     if response.method == "POST":
         form = DoctorForm(response.POST)
+        license_number = response.POST.get("license_number")
+        if Doctor.objects.filter(license_number=license_number).exists():
+            messages.error(response, "License Number Taken")
+            return render(response, "patient/doctorinformation.html")
         if form.is_valid():
             form.save()
         return redirect("/doctorlist")
@@ -75,8 +79,6 @@ def doctorlist(request):
     return render(request, "patient/doctorlist.html", {"information":information, "form":form})
     
     
-
-
 def doctor_delete(request, pk):
     pk = pk
     try:

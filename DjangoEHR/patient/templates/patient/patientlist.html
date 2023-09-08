@@ -65,12 +65,13 @@
             <div class="modal-body">
                 <form id="updatePatientForm">
                     {% csrf_token %}
-                    
-                    
+                    {% comment %} {%if error%}
+                    {%endif%} {% endcomment %}
                     <input  id="email" name="email" value="">
                     <input id="name" name="name" value="">
 
                     <input type = "hidden"id="patientId" name="patientId" value="">
+                    
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
@@ -80,16 +81,11 @@
         </div>
     </div>
 </div>
-<!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-<!-- Include DataTables JavaScript library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-<!-- Include DataTables Bootstrap JavaScript library -->
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script> 
-
-<!-- Include Bootstrap JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -112,7 +108,11 @@
                 }
             });
         });
-    });
+                // Check if an error flag is present and show a Toastr error message
+                {% if error %}
+                toastr.error("Email already exists for another patient.");
+            {% endif %}
+        });
     $(".preview").click(function () {
 
         var $modal = $("#updatePatientModal");

@@ -17,11 +17,12 @@ class Receptionist(models.Model):
 
 class Doctor(models.Model):
     id = models.AutoField(primary_key=True)  # Add an auto-generated and auto-incremented ID field
+    email = models.CharField(unique = True, max_length=255, null = True)
     name = models.CharField(max_length=100, null=True, blank=True)
-    gender = models.CharField(max_length=100, null=True, blank=True)
-    specialization = models.CharField(max_length=100, null=True, blank=True)
-    license_number = models.CharField(max_length=50, null=True, blank=True)
-    contact_number = models.CharField(max_length=20, null=True, blank=True)
+    gender = models.CharField(max_length=15, null=True, blank=True)
+    specialization = models.CharField(max_length=50, null=True, blank=True)
+    license_number = models.CharField(max_length=10, null=True, blank=True, unique = True)
+    contact_number = models.CharField(max_length=11, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
 
     def __str__(self):
