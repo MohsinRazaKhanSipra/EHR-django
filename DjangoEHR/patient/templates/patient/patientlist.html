@@ -116,13 +116,16 @@
     $(".preview").click(function () {
 
         var $modal = $("#updatePatientModal");
-    
+        // let imageVar=$('#image12');
+        // let idVar=$('#idV');
         let currentRow=$(this).parents('tr');
         var col1=currentRow.find("td:eq(1)").text();
         var col0=currentRow.find("td:eq(0)").text();
 
         var col2=currentRow.find("td:eq(2)").text();
         var col3=currentRow.find("td:eq(3)").text();
+        
+        // var col5=currentRow.find("td:eq(0)");
         
         document.getElementById('name').value = col1
         document.getElementById('patientId').value = col0

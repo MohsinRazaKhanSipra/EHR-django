@@ -9,6 +9,10 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
+    # if request.user.is_authenticated:
+    #     image = UserProfile.objects.filter(user=request.user).first().profile_picture
+    #     if image:
+    #         request.session["image"] = image.url
 
     return render(request, "patient/home.html")
 
@@ -82,38 +86,30 @@ def doctorlist(request):
 def doctor_delete(request, pk):
     pk = pk
     try:
-        image_sel = Doctor.objects.get(pk = pk)
+        image_sel = Doctor.objects.get(id = img_id)
     except Doctor.DoesNotExist:
         return redirect('doctorlist')
     image_sel.delete()
     return redirect('doctorlist')
 
 
-def patient_delete(request, pk):
-    pk = pk
-    try:    
-        image_sel = Patient.objects.get(pk = pk)
+def patient_delete(request, image_id):
+    img_id = int(image_id)
+    try:
+        image_sel = Patient.objects.get(id = img_id)
     except Patient.DoesNotExist:
         return redirect('patientlist')
     image_sel.delete()
     return redirect('patientlist')
 
-class  PatientUpdate(View):
+class  RoomUpdate(View):
     def  post(self, request, pk):
         data =  dict()
-        patient = Patient.objects.get(pk=pk)
-        form = PatientForm(instance=patient, data=request.POST)
+        room = Patient.objects.get(pk=pk)
+        form = PatientForm(instance=room, data=request.POST)
         if form.is_valid():
-            patient = form.save()
+            room = form.save()
             
-        return HttpResponse("working")
-
-class  DoctorUpdate(View):
-    def  post(self, request, pk):
-        data =  dict()
-        doctor = Doctor.objects.get(pk=pk)
-        form = DoctorForm(instance=doctor, data=request.POST)
-        if form.is_valid():
-            doctor = form.save()
-            
+        # information = Patient.objects.all()
+        # return render(request, "patient/patientlist.html",{"information":information, "form":form})
         return HttpResponse("working")
