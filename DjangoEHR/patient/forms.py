@@ -14,25 +14,16 @@ class RegisterForm(UserCreationForm):
 
 class PatientForm(forms.ModelForm):
     email = forms.EmailField()
-    name = forms.CharField()
-
     class Meta:
         model = Patient
         fields = [ "name", 'email']
 
 
 class DoctorForm(forms.ModelForm):
-    name = forms.CharField(max_length = 100)
-    specialization = forms.CharField(max_length = 100)
-    license_number = forms.IntegerField()
-    contact_number = forms.IntegerField()
-    email = forms.EmailField()
-
-
-
+    # email = forms.EmailField()
     class Meta:
         model = Doctor
-        fields = ["name", "specialization" , "license_number","contact_number", "email" ]
+        fields = ["name", "specialization" , "license_number","contact_number" ]
 
 
  
