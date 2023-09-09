@@ -88,7 +88,7 @@ def doctor_delete(request, pk):
 
 
 def patient_delete(request, pk):
-    pk = int(pk)
+    pk = pk
     try:
         image_sel = Patient.objects.get(pk = pk)
     except Patient.DoesNotExist:
