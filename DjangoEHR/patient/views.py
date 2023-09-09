@@ -1,18 +1,10 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Patient
 from django.http import JsonResponse, HttpResponse
-from django.contrib.auth.decorators import login_required
 from .forms import *
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, DeleteView
-# Create your views here.
-def home(request):
-    # if request.user.is_authenticated:
-    #     image = UserProfile.objects.filter(user=request.user).first().profile_picture
-    #     if image:
-    #         request.session["image"] = image.url
 
+def home(request):
     return render(request, "patient/home.html")
 
 def login(request):
@@ -35,6 +27,7 @@ def register(response):
 def patientinformation(response):
     if response.method == "POST":
         form = PatientForm(response.POST)
+        
         if form.is_valid():
             form.save()
         return redirect("/patientlist")
@@ -44,7 +37,6 @@ def patientinformation(response):
         return render(response, "patient/patient.html", {"form":form})
 
 
-# @login_required
 def patientlist(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
@@ -71,6 +63,10 @@ def doctorinformation(response):
 def doctorlist(request):
     if request.method == "POST":
         form = DoctorForm(request.POST, instance=image)
+        license_number = request.POST.get('license_number')
+        if Doctor.objects.filter(license_number=license_number).exists():
+            messages.error(response, "License Number Taken")
+            return render(response, "patient/doctorinformation.html")
         if form.is_valid():
             form.save()
     else:
@@ -84,30 +80,41 @@ def doctorlist(request):
 def doctor_delete(request, pk):
     pk = pk
     try:
-        image_sel = Doctor.objects.get(id = img_id)
+        image_sel = Doctor.objects.get(pk = pk)
     except Doctor.DoesNotExist:
         return redirect('doctorlist')
     image_sel.delete()
     return redirect('doctorlist')
 
 
-def patient_delete(request, image_id):
-    img_id = int(image_id)
+def patient_delete(request, pk):
+    pk = int(pk)
     try:
-        image_sel = Patient.objects.get(id = img_id)
+        image_sel = Patient.objects.get(pk = pk)
     except Patient.DoesNotExist:
         return redirect('patientlist')
     image_sel.delete()
     return redirect('patientlist')
 
-class  RoomUpdate(View):
+class  PatientUpdate(View):
     def  post(self, request, pk):
         data =  dict()
-        room = Patient.objects.get(pk=pk)
-        form = PatientForm(instance=room, data=request.POST)
+        patient = Patient.objects.get(pk=pk)
+        form = PatientForm(instance=patient, data=request.POST)
         if form.is_valid():
-            room = form.save()
+            patient = form.save()
             
-        # information = Patient.objects.all()
-        # return render(request, "patient/patientlist.html",{"information":information, "form":form})
-        return HttpResponse("working")
+        information = Patient.objects.all()
+        return render(request, "patient/patientlist.html",{"information":information, "form":form})
+        
+
+class  DoctorUpdate(View):
+    def  post(self, request, pk):
+        data =  dict()
+        doctor = Doctor.objects.get(pk=pk)
+        form = DoctorForm(instance=doctor, data=request.POST)
+        if form.is_valid():
+            doctor = form.save()
+            
+        information = Doctor.objects.all()
+        return render(request, "patient/doctorlist.html",{"information":information, "form":form})  
