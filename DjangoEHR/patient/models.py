@@ -23,18 +23,19 @@ class Doctor(models.Model):
     license_number = models.CharField(max_length=50, null=True, blank=True)
     contact_number = models.CharField(max_length=20, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
+    hospital = models.OneToOneField(Hospital, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 class Patient(models.Model):
-    id = models.AutoField(primary_key=True)  # Add an auto-generated and auto-incremented ID field
+    id = models.AutoField(primary_key=True) 
     name = models.CharField(max_length=25, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     address = models.TextField()
     medical_history = models.TextField(blank=True)
     email = models.EmailField(blank=True, null=True)
-    MRN = models.CharField(max_length=20, unique=True, null=True)  # Add a unique MRN field
+    MRN = models.CharField(max_length=20, unique=True, null=True)
 
     def __str__(self):
         return str(self.name)
@@ -42,7 +43,6 @@ class Patient(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.MRN:
-            # Generate an MRN if it doesn't exist
             self.MRN = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(20))
         super().save(*args, **kwargs)
 
@@ -57,5 +57,15 @@ class PatientProfile(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+
+
     
 
+class Hospital(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.TextField()
+    # You can add more attributes specific to the hospital here
+
+    def __str__(self):
+        return self.name

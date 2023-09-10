@@ -32,25 +32,35 @@ def patientinformation(request):
         form = PatientForm(request.POST)
         email = request.POST.get("email")
         if Patient.objects.filter(email = email).exists():
-            messages.error(request,"Email already taken")
-        if form.is_valid():
-            form.save()
-        return redirect("/patientlist")
+            messages.error(request,".")
+        else:
+            if form.is_valid():
+                form.save()
+            return redirect("/patientlist")
     else:
         form = PatientForm()
 
-        return render(request, "patient/patient.html", {"form":form})
+    return render(request, "patient/patient.html", {"form":form})
 
 
 def patientlist(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+
+        if Doctor.objects.filter(email = email, name = name).exists():
+            messages.error(request,".")
+
+        elif Doctor.objects.filter(email = email).exists():
+            messages.warning(request,".")
+
         if form.is_valid():
             form.save()
     else:
         form = PatientForm()
-    information = Patient.objects.all()
-    return render(request, "patient/patientlist.html",{"information":information, "form":form})
+        information = Patient.objects.all()
+        return render(request, "patient/patientlist.html",{"information":information, "form":form})
 
 def doctorinformation(request):
     if request.method == "POST":
@@ -113,8 +123,16 @@ class  PatientUpdate(View):
         data =  dict()
         patient = Patient.objects.get(pk=pk)
         form = PatientForm(instance=patient, data=request.POST)
-        if form.is_valid():
-            patient = form.save()
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        if Patient.objects.filter(name = name, email = email).exists():
+            print("this works")
+            messages.error(request,"Inputs already in the table")
+        elif Patient.objects.filter(email = email).exists():
+            messages.warning(request,"Email is already there in the table")
+        else:           
+            if form.is_valid():
+                patient = form.save()
             
         information = Patient.objects.all()
         return render(request, "patient/patientlist.html",{"information":information, "form":form})
@@ -141,3 +159,6 @@ class  DoctorUpdate(View):
         form = DoctorForm()    
         information = Doctor.objects.all()
         return render(request, "patient/doctorlist.html",{"information":information, "form":form})  
+
+
+        #check this update view, it shouldnt upload the form if the checks have been activated. 

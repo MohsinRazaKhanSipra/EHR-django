@@ -1,20 +1,46 @@
 {% extends "patient/base.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
+{% load static %}
+<link href="{% static 'css/jquery.toast.css' %}" rel="stylesheet">
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet"/>
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+{% if messages %}
+  
+  <script src="{% static 'javascript/jquery.toast.js' %}"></script>
+  <script>
+      $(document).ready(function() {
+          {% for message in messages %}
+          var myToast = $.toast({
+            text: "{{message}}", // Text that is to be shown in the toast
+            heading: 'Note', // Optional heading to be shown on the toast
+            icon: 'warning', // Type of toast icon
+            showHideTransition: 'fade', // fade, slide or plain
+            allowToastClose: true, // Boolean value true or false
+            hideAfter: 3000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+            stack: false, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+            position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+            
+            
+            
+            textAlign: 'center',  // Text alignment i.e. left, right or center
+            loader: true,  // Whether to show loader or not. True by default
+            loaderBg: '#9EC600',  // Background color of the toast loader
+            beforeShow: function () {}, // will be triggered before the toast is shown
+            afterShown: function () {}, // will be triggered after the toat has been shown
+            beforeHide: function () {}, // will be triggered before the toast gets hidden
+            afterHidden: function () {}  // will be triggered after the toast has been hidden
+        });
+          {% endfor %}
+      });
+  </script>
+{% endif %}
 
 
 
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<br><br><br><br><br>
+<br><br>
 
 <div class="container" style="text-align:center">
     <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -65,14 +91,22 @@
             <div class="modal-body">
                 <form id="updatePatientForm">
                     {% csrf_token %}
+                
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" value="">
+                    </div>
+                
+                
+                    <input type="hidden" id="patientId" name="patientId" value="">
                     
-                    
-                    <input  id="email" name="email" value="">
-                    <input id="name" name="name" value="">
-
-                    <input type = "hidden"id="patientId" name="patientId" value="">
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -116,8 +150,6 @@
     $(".preview").click(function () {
 
         var $modal = $("#updatePatientModal");
-        // let imageVar=$('#image12');
-        // let idVar=$('#idV');
         let currentRow=$(this).parents('tr');
         var col1=currentRow.find("td:eq(1)").text();
         var col0=currentRow.find("td:eq(0)").text();
@@ -125,7 +157,6 @@
         var col2=currentRow.find("td:eq(2)").text();
         var col3=currentRow.find("td:eq(3)").text();
         
-        // var col5=currentRow.find("td:eq(0)");
         
         document.getElementById('name').value = col1
         document.getElementById('patientId').value = col0
