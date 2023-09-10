@@ -1,20 +1,34 @@
-{%extends "patient/base.html"%}
-{%block content%}
+{% extends "patient/base.html" %}
+{% block content %}
 {% load crispy_forms_tags %}
-<br>
-<br>
-<br>
+<style>
+  /* Center the form horizontally and vertically */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 100% viewport height to center vertically */
+    background-color: #000; /* Set the background color to black */
+  }
+
+  form {  
+    text-align: left;
+    border: 2px solid white; /* Border around the form */
+    padding: 20px; /* Padding inside the border */
+    background-color: black; /* Background color inside the border */
+    border-radius: 10px; /* Border radius */
+    max-width: 400px; /* Maximum width of the form */
+  }
+
+  h2 {
+    text-align: center; /* Center the heading */
+  }
+</style>
 
 <h2>Patient information</h2>
-<br>
-<br>
-
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
-<br>
-<br>
-
-  <button type="submit" style = "background-color: #5c3bdf;">Log In</button>
+  <button type="submit" style="background-color: #5c3bdf;">Log In</button>
 </form>
 {% endblock %}

@@ -27,17 +27,19 @@ def register(response):
 
 
 
-def patientinformation(response):
-    if response.method == "POST":
-        form = PatientForm(response.POST)
-        
+def patientinformation(request):
+    if request.method == "POST":
+        form = PatientForm(request.POST)
+        email = request.POST.get("email")
+        if Patient.objects.filter(email = email).exists():
+            messages.error(request,"Email already taken")
         if form.is_valid():
             form.save()
         return redirect("/patientlist")
     else:
         form = PatientForm()
 
-        return render(response, "patient/patient.html", {"form":form})
+        return render(request, "patient/patient.html", {"form":form})
 
 
 def patientlist(request):
@@ -71,10 +73,12 @@ def doctorinformation(request):
 def doctorlist(request):
     if request.method == "POST":
         form = DoctorForm(request.POST, instance=image)
-        license_number = request.POST.get('license_number')
-        if Doctor.objects.filter(license_number=license_number).exists():
-            
-            return render(request,{"error": True})
+        # name = request.POST.get('name')
+        # specialization = request.POST.get('specialization')
+        # contact_number = request.POST.get('contact_number')
+        # license_number = request.POST.get('license_number')
+        # if Doctor.objects.filter(name = name, specialization = specialization, contact_number = contact_number, license_number = license_number).exists():
+        #     messages.error(request,"Fields already in the Table")
         if form.is_valid():
             form.save()
     else:
@@ -120,9 +124,20 @@ class  DoctorUpdate(View):
     def  post(self, request, pk):
         data =  dict()
         doctor = Doctor.objects.get(pk=pk)
-        form = DoctorForm(instance=doctor, data=request.POST)
-        if form.is_valid():
-            doctor = form.save()
-            
+        name = request.POST.get('name')
+        specialization = request.POST.get('specialization')
+        contact_number = request.POST.get('contact_number')
+        license_number = request.POST.get('license_number')
+        if Doctor.objects.filter(name = name, specialization = specialization, contact_number = contact_number, license_number = license_number).exists():
+            print("debug 1")
+            messages.error(request,"Already in the Table")
+        elif Doctor.objects.filter(license_number = license_number).exists():
+            print("debug 2")
+            messages.error(request,"License number already exists")
+        else:
+            form = DoctorForm(instance=doctor, data=request.POST)
+            if form.is_valid():
+                doctor = form.save()
+        form = DoctorForm()    
         information = Doctor.objects.all()
         return render(request, "patient/doctorlist.html",{"information":information, "form":form})  
