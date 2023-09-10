@@ -14,13 +14,19 @@ class RegisterForm(UserCreationForm):
 
 class PatientForm(forms.ModelForm):
     email = forms.EmailField()
+    name = forms.CharField()
+
     class Meta:
         model = Patient
         fields = [ "name", 'email']
 
 
 class DoctorForm(forms.ModelForm):
-    # email = forms.EmailField()
+    name = forms.CharField()
+    specialization = forms.CharField()
+    license_number = forms.IntegerField()
+    contact_number = forms.IntegerField()
+
     class Meta:
         model = Doctor
         fields = ["name", "specialization" , "license_number","contact_number" ]

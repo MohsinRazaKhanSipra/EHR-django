@@ -3,6 +3,9 @@ from .models import Patient
 from django.http import JsonResponse, HttpResponse
 from .forms import *
 from django.views.generic import TemplateView, View, DeleteView
+from django.contrib import messages
+
+
 
 def home(request):
     return render(request, "patient/home.html")
@@ -47,16 +50,21 @@ def patientlist(request):
     information = Patient.objects.all()
     return render(request, "patient/patientlist.html",{"information":information, "form":form})
 
-def doctorinformation(response):
-    if response.method == "POST":
-        form = DoctorForm(response.POST)
-        if form.is_valid():
-            form.save()
-        return redirect("/doctorlist")
+def doctorinformation(request):
+    if request.method == "POST":
+        form = DoctorForm(request.POST)
+        license_number = request.POST.get("license_number")
+        if Doctor.objects.filter(license_number = license_number).exists():
+            messages.error(request,"License number is already taken")
+            
+        else:
+            if form.is_valid():
+                form.save()
+            return redirect("/doctorlist")
     else:
         form = DoctorForm()
 
-        return render(response, "patient/doctorinformation.html", {"form":form})
+    return render(request, "patient/doctorinformation.html", {"form":form})
 
 
     
@@ -65,8 +73,8 @@ def doctorlist(request):
         form = DoctorForm(request.POST, instance=image)
         license_number = request.POST.get('license_number')
         if Doctor.objects.filter(license_number=license_number).exists():
-            messages.error(response, "License Number Taken")
-            return render(response, "patient/doctorinformation.html")
+            
+            return render(request,{"error": True})
         if form.is_valid():
             form.save()
     else:

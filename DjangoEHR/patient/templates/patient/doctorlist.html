@@ -75,6 +75,9 @@
             <div class="modal-body">
                 <form id="updateDoctorForm">
                     {% csrf_token %}
+                    {%if error %}
+                    <p>erro r</p>
+                    {%endif%}
                     <input id="name" name="name">
                     <input id="specialization" name="specialization">
                     <input id="license_number" name="license_number">
