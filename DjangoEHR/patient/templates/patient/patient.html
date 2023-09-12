@@ -7,36 +7,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-{% if messages %}
+
+{% if error_msg%}
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{% static 'javascript/jquery.toast.js' %}"></script>
   <script>
-      $(document).ready(function() {
-          {% for message in messages %}
-          var myToast = $.toast({
-            text: "Enter a unique email", // Text that is to be shown in the toast
-            heading: 'Note', // Optional heading to be shown on the toast
-            icon: 'warning', // Type of toast icon
-            showHideTransition: 'fade', // fade, slide or plain
-            allowToastClose: true, // Boolean value true or false
-            hideAfter: 3000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
-            stack: false, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
-            position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
-            
-            
-            
-            textAlign: 'center',  // Text alignment i.e. left, right or center
-            loader: true,  // Whether to show loader or not. True by default
-            loaderBg: '#9EC600',  // Background color of the toast loader
-            beforeShow: function () {}, // will be triggered before the toast is shown
-            afterShown: function () {}, // will be triggered after the toat has been shown
-            beforeHide: function () {}, // will be triggered before the toast gets hidden
-            afterHidden: function () {}  // will be triggered after the toast has been hidden
-        });
-          {% endfor %}
-      });
+
+      toastr.error('{{error_msg}}', '{{title}}');
   </script>
 {% endif %}
+
 <style>
   #parent {
     text-align: center;

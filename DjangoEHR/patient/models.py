@@ -2,7 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 import random
 import string
-
+class Hospital(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    address = models.TextField()
+    def __str__(self):
+        return self.name
 
 class Receptionist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -62,10 +67,3 @@ class PatientProfile(models.Model):
 
     
 
-class Hospital(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.TextField()
-    # You can add more attributes specific to the hospital here
-
-    def __str__(self):
-        return self.name

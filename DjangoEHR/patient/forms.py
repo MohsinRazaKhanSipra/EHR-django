@@ -31,7 +31,11 @@ class DoctorForm(forms.ModelForm):
         model = Doctor
         fields = ["name", "specialization" , "license_number","contact_number" ]
 
+class HospitalForm(forms.ModelForm):
+    name = forms.CharField()
+    address = forms.CharField()
+    
 
- 
-
-
+    class Meta:
+        model = Hospital
+        fields = ["name", "address"]

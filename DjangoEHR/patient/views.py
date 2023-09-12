@@ -32,6 +32,8 @@ def patientinformation(request):
         form = PatientForm(request.POST)
         email = request.POST.get("email")
         if Patient.objects.filter(email = email).exists():
+            print("debug 1")
+            form = PatientForm()
             messages.error(request,".")
         else:
             if form.is_valid():
@@ -49,11 +51,12 @@ def patientlist(request):
         name = request.POST.get("name")
         email = request.POST.get("email")
 
-        if Doctor.objects.filter(email = email, name = name).exists():
-            messages.error(request,".")
+        # if Patient.objects.filter(email = email, name = name).exists():
+        #     print("pa")
+        #     messages.error(request,".")
 
-        elif Doctor.objects.filter(email = email).exists():
-            messages.warning(request,".")
+        # elif Patient.objects.filter(email = email).exists():
+        #     messages.warning(request,".")
 
         if form.is_valid():
             form.save()
@@ -122,43 +125,83 @@ class  PatientUpdate(View):
     def  post(self, request, pk):
         data =  dict()
         patient = Patient.objects.get(pk=pk)
+
         form = PatientForm(instance=patient, data=request.POST)
+
         name = request.POST.get('name')
         email = request.POST.get('email')
-        if Patient.objects.filter(name = name, email = email).exists():
-            print("this works")
-            messages.error(request,"Inputs already in the table")
-        elif Patient.objects.filter(email = email).exists():
-            messages.warning(request,"Email is already there in the table")
+
+        if Patient.objects.filter(name = name).exists() or Patient.objects.filter(email = email).exists():
+            print("PatientUpdate2")
+            # messages.error(request,"Inputs already in the table")
+            error_msg = "Inputs already exist"
+            title = "Update Error"
+            error_var = True
+            information = Patient.objects.all()
+            return render(request, "patient/patientlist.html",{"information":information, "error_msg":error_msg, "title":title,"error_var":error_var })
+            
         else:           
             if form.is_valid():
                 patient = form.save()
             
         information = Patient.objects.all()
-        return render(request, "patient/patientlist.html",{"information":information, "form":form})
+        return render(request, "patient/patientlist.html",{"information":information})
         
 
+
 class  DoctorUpdate(View):
+
     def  post(self, request, pk):
         data =  dict()
         doctor = Doctor.objects.get(pk=pk)
-        name = request.POST.get('name')
-        specialization = request.POST.get('specialization')
-        contact_number = request.POST.get('contact_number')
-        license_number = request.POST.get('license_number')
-        if Doctor.objects.filter(name = name, specialization = specialization, contact_number = contact_number, license_number = license_number).exists():
-            print("debug 1")
-            messages.error(request,"Already in the Table")
-        elif Doctor.objects.filter(license_number = license_number).exists():
-            print("debug 2")
-            messages.error(request,"License number already exists")
-        else:
-            form = DoctorForm(instance=doctor, data=request.POST)
-            if form.is_valid():
-                doctor = form.save()
-        form = DoctorForm()    
+        form = DoctorForm(instance=doctor, data=request.POST)
+        # name = request.POST.get('name')
+        # specialization = request.POST.get('specialization')
+        # contact_number = request.POST.get('contact_number')
+        # license_number = request.POST.get('license_number')
+        # if Doctor.objects.filter(name = name, specialization = specialization, contact_number = contact_number, license_number = license_number).exists():
+        #     form = DoctorForm()
+        #     messages.error(request,"Already in the Table")
+
+        # elif Doctor.objects.filter(license_number = license_number).exists():
+        #     form = DoctorForm()
+        #     messages.error(request,"License number already exists")
+        if form.is_valid():
+            form = form.save()
+            
         information = Doctor.objects.all()
         return render(request, "patient/doctorlist.html",{"information":information, "form":form})  
 
 
-        #check this update view, it shouldnt upload the form if the checks have been activated. 
+def hospitalinformation(request):
+    if request.method == "POST":
+        form = HospitalForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("/hospitallist")
+    else:
+        form = HospitalForm()
+
+    return render(request, "patient/hospitalinformation.html", {"form":form})
+
+
+def hospitallist(request):
+    if request.method == "POST":
+        form = HospitalForm(request.POST, instance=image)
+       
+        if form.is_valid():
+            form.save()
+    else:
+        form = HospitalForm()
+    information = Hospital.objects.all()
+    return render(request, "patient/hospitallist.html", {"information":information, "form":form})
+
+
+def hospital_delete(request, pk):
+    pk = pk
+    try:
+        image_sel = Hospital.objects.get(pk = pk)
+    except Hospital.DoesNotExist:
+        return redirect('hospitallist')
+    image_sel.delete()
+    return redirect('hospitallist')
