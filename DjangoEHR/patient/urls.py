@@ -25,6 +25,8 @@ urlpatterns = [
 
     path('patientlist/update/<int:pk>', views.PatientUpdate.as_view(), name='patientlist_update'),
     path('doctorlist/update/<int:pk>', views.DoctorUpdate.as_view(), name='doctorlist_update'),
+    path('hospitallist/update/<int:pk>', views.HospitalUpdate.as_view(), name='hospitallist_update'),
+
 
     path("hospitalinformation/", views.hospitalinformation, name="hospitalinformation"),
     path("hospitallist/", views.hospitallist, name="hospitallist"),

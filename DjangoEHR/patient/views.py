@@ -172,6 +172,17 @@ class  DoctorUpdate(View):
         information = Doctor.objects.all()
         return render(request, "patient/doctorlist.html",{"information":information, "form":form})  
 
+class  HospitalUpdate(View):
+
+    def  post(self, request, pk):
+        data =  dict()
+        hospital = Hospital.objects.get(pk=pk)
+        form = HospitalForm(instance=hospital, data=request.POST)
+        if form.is_valid():
+            form = form.save()
+            
+        information = Hospital.objects.all()
+        return render(request, "patient/hospitallist.html",{"information":information, "form":form}) 
 
 def hospitalinformation(request):
     if request.method == "POST":
