@@ -35,24 +35,24 @@ git clone https://github.com/yourusername/djangoehr.git
 
 Create a virtual environment and activate it:
 
-bash
+    bash
 
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    python -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 
 Install project dependencies:
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
-Configure your database settings in the settings.py file.
+    Configure your database settings in the settings.py file.
 
 Apply database migrations:
 
-python manage.py migrate
+    python manage.py migrate
 
 Create a superuser account:
 
-python manage.py createsuperuser
+    python manage.py createsuperuser
 
 Start the development server:
 
