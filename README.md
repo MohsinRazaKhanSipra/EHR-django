@@ -27,11 +27,11 @@ Installation
 
 To get started with DjangoEHR, follow these installation steps:
 
-    Clone the repository to your local machine:
+    Clone the repository to your local machine
 
     bash
 
-git clone https://github.com/yourusername/djangoehr.git
+   git clone https://github.com/yourusername/djangoehr.git
 
 Create a virtual environment and activate it:
 
@@ -62,8 +62,8 @@ Start the development server:
 
 Usage
 
-For detailed usage instructions and documentation, please refer to the Wiki section of this repository.
-Contributing
+   For detailed usage instructions and documentation, please refer to the Wiki section of this repository.
+   Contributing
 
 We welcome contributions to DjangoEHR. To contribute, please follow these guidelines:
 
