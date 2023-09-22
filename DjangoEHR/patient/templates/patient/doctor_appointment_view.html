@@ -1,0 +1,62 @@
+{% extends "patient/base.html" %}
+{% block content %}
+{% block extrascripts %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-oC2pKwMEw5/4Pp3FNYu5b8NA5SxmFpo5Ko5r5+5f5v5Bk5x5Ko5r5+5f5v5Bk5x5Ko" crossorigin="anonymous">
+
+<!-- DataTables JavaScript -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable(); 
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+{% endblock extrascripts %}
+
+<br>
+<div class="grey-bg container-fluid">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr style="text-align:center">
+                      <th>Title</th>
+                      <th>Details</th>
+                      <th>Doctor</th>
+                      <th>Patient Name</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in appointments %}
+                    <tr>
+                        <td>{{ x.title }}</td>
+                        <td>{{ x.detail }}</td>
+                        <td>{{ x.doctor }}</td>
+
+                        <td>{{ x.patient }}</td>
+                        <td>{{ x.start_datetime }}</td>
+                        <td>{{ x.end_datetime }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+{% endblock %}

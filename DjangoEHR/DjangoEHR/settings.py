@@ -21,6 +21,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,10 +35,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     "django_htmx",
-    
 ]
 
 MIDDLEWARE = [
+    # 'patient.user_restrict_middleware.UserRestrictMiddleware',
     "django_htmx.middleware.HtmxMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,3 +143,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 MESSAGE_TAGS = {
     messages.ERROR:'danger'
 }
+# settings.py
+
+TIME_ZONE = 'Asia/Karachi'

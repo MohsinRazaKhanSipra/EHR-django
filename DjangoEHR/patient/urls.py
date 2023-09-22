@@ -9,6 +9,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("home/", views.home, name="home"),
 
+
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path("register/", views.register, name="register"),
 
@@ -30,5 +31,16 @@ urlpatterns = [
 
     path("hospitalinformation/", views.hospitalinformation, name="hospitalinformation"),
     path("hospitallist/", views.hospitallist, name="hospitallist"),
+
+    path('appointment/', views.appointment_list, name='appointment_list'),
+    
+    path('update/<int:pk>/', views.appointment_update, name='appointment_update'),
+    path('delete/<int:pk>/', views.appointment_delete, name='appointment_delete'),
+
+    path('doctor_login/', auth_views.LoginView.as_view(template_name='registration/doctor_login.html'), name='doctor_login'),
+    path("doctor_register/", views.register, name="doctor_register"),
+
+    path('doctor_appointment_view/', views.doctor_appointment_view, name='doctor_appointment_view'),
+
     
 ]

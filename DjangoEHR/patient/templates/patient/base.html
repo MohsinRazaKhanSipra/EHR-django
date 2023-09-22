@@ -1,19 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en" dir="ltr">
   <head>
+{% load static %}
+   
+
     <meta charset="UTF-8">
     <title> DjandoEHR </title>
-    
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <style>
-        {% comment %} .additional-text {
-          position: absolute;
-          top: 0;
-          right: 0;
-          font-size: 16px;
-      } {% endcomment %}
+       
               /* Google Fonts Import Link */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         *{
@@ -276,6 +273,8 @@
 
         }
      </style>
+     {%block extracss%}
+     {%endblock extracss%}
 
    </head>
 <body>
@@ -285,6 +284,7 @@
       <span class="logo_name">Techsasoft</span>
     </div>
     <ul class="nav-links">
+      {% if request.user.is_authenticated %}
       <li>
         <a href="/home">
           <i class='bx bx-grid-alt' ></i>
@@ -292,6 +292,7 @@
         </a>
         
       </li>
+
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -306,6 +307,7 @@
           <li><a href="/patientlist">Patient List</a></li>
         </ul>
       </li>
+
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -335,10 +337,43 @@
           <li><a href="/hospitallist">Hospitals list</a></li>
         </ul>
       </li>
-      
-      
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-plug' ></i>
+            <span class="link_name">Appointments</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          
+          <li><a href="/appointment">Appointment List</a></li>
+          
+        </ul>
+      </li>
+      {%endif%}
     
-      
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-plug' ></i>
+            <span class="link_name">Account</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          
+          {% if request.user.is_authenticated %}
+
+          <li><a href="{% url "logout"%}">Logout</a></li>
+          {%else%}
+
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Sign Up</a></li>
+          {%endif%}
+          
+        </ul>
+      </li>
   </li>
 </ul>
   </div>
@@ -346,7 +381,6 @@
     <div class="home-content">
       <i class='bx bx-menu' ></i>
       <span class="text">DjangoEHR</span>
-      {% comment %} <div class="additional-text">Additional Text on the Extreme Right</div> {% endcomment %}
     </div>
     <div class="main-content" >
       {%block content%}
@@ -358,7 +392,7 @@
       let arrow = document.querySelectorAll(".arrow");
       for (var i = 0; i < arrow.length; i++) {
         arrow[i].addEventListener("click", (e)=>{
-      let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+      let arrowParent = e.target.parentElement.parentElement;
       arrowParent.classList.toggle("showMenu");
         });
       }
@@ -369,5 +403,7 @@
         sidebar.classList.toggle("close");
       });
   </script>
+  {%block extrajs%}
+  {%endblock extrajs%}
 </body>
 </html>

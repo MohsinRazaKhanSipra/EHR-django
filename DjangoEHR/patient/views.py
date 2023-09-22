@@ -2,16 +2,23 @@ from django.shortcuts import render, redirect
 from .models import Patient
 from django.http import JsonResponse, HttpResponse
 from .forms import *
-from django.views.generic import TemplateView, View, DeleteView
+from django.views.generic import View
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import Group
 
 
 def home(request):
-    return render(request, "patient/home.html")
+    appointments = Appointment.objects.all()
+    return render(request, "patient/home.html", {"appointments": appointments})
 
 def login(request):
-    return render(request, "registration/login.html")
+    if request.user.is_authenticated():
+        return render(request, "patient/home.html")
+    else:
+
+        return render(request, "registration/login.html")
 
 
 def register(response):
@@ -27,12 +34,14 @@ def register(response):
 
 
 
+
+
+
 def patientinformation(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
         email = request.POST.get("email")
         if Patient.objects.filter(email = email).exists():
-            print("debug 1")
             form = PatientForm()
             messages.error(request,".")
         else:
@@ -44,7 +53,7 @@ def patientinformation(request):
 
     return render(request, "patient/patient.html", {"form":form})
 
-
+@login_required
 def patientlist(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
@@ -65,6 +74,8 @@ def patientlist(request):
         information = Patient.objects.all()
         return render(request, "patient/patientlist.html",{"information":information, "form":form})
 
+@login_required
+
 def doctorinformation(request):
     if request.method == "POST":
         form = DoctorForm(request.POST)
@@ -82,6 +93,7 @@ def doctorinformation(request):
     return render(request, "patient/doctorinformation.html", {"form":form})
 
 
+@login_required
     
 def doctorlist(request):
     if request.method == "POST":
@@ -184,6 +196,7 @@ class  HospitalUpdate(View):
         information = Hospital.objects.all()
         return render(request, "patient/hospitallist.html",{"information":information, "form":form}) 
 
+@login_required
 def hospitalinformation(request):
     if request.method == "POST":
         form = HospitalForm(request.POST)
@@ -196,6 +209,7 @@ def hospitalinformation(request):
     return render(request, "patient/hospitalinformation.html", {"form":form})
 
 
+@login_required
 def hospitallist(request):
     if request.method == "POST":
         form = HospitalForm(request.POST, instance=image)
@@ -209,6 +223,7 @@ def hospitallist(request):
 
 
 def hospital_delete(request, pk):
+
     pk = pk
     try:
         image_sel = Hospital.objects.get(pk = pk)
@@ -216,3 +231,55 @@ def hospital_delete(request, pk):
         return redirect('hospitallist')
     image_sel.delete()
     return redirect('hospitallist')
+
+
+@login_required
+def appointment_list(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("appointmentlist")
+    else:
+        form = AppointmentForm()
+    appointments = Appointment.objects.all()
+    doctors = Doctor.objects.all()
+    patients = Patient.objects.all()
+
+    return render(request, 'appointments/appointment_list.html', {'appointments': appointments, "doctors":doctors,"patients" : patients, "form":form})
+
+def appointment_update(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_list')
+    else:
+        form = AppointmentForm(instance=appointment)
+    return render(request, 'appointments/appointment_form.html', {'form': form})
+
+def appointment_delete(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    if request.method == 'POST':
+        appointment.delete()
+        return redirect('appointment_list')
+    return render(request, 'appointments/appointment_confirm_delete.html', {'appointment': appointment})
+
+def doctor_appointment_view(request):
+    user = request.user  # This should be a logged-in doctor user
+    try:
+        doctor = Doctor.objects.get(name=user)
+    except Doctor.DoesNotExist:
+        doctor = None  # Handle the case where there is no matching doctor
+    if doctor:
+        appointments = Appointment.objects.filter(doctor=doctor)
+        return render(request, 'patient/doctor_appointment_view.html', {'appointments': appointments})
+    else:
+        appointments = Appointment.objects.all()
+        return render(request, 'patient/doctor_appointment_view.html', {'appointments': appointments})
+        
+    
+
+    
+     #user.groups = 
