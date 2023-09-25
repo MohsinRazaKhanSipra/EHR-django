@@ -32,14 +32,10 @@ class PatientForm(forms.ModelForm):
 
 
 class DoctorForm(forms.ModelForm):
-    name = forms.CharField()
-    specialization = forms.CharField()
-    license_number = forms.IntegerField()
-    contact_number = forms.IntegerField()
 
     class Meta:
         model = Doctor
-        fields = ["name", "specialization" , "license_number","contact_number" ]
+        fields = [ "username", "password", "name", "specialization" , "license_number","contact_number" ]
     widgets = {
                 'date_of_birth': DateInput(),
             }
@@ -82,18 +78,6 @@ class HospitalForm(forms.ModelForm):
 
         return cleaned_data
 
-class DoctorForm(forms.ModelForm):
-    name = forms.CharField()
-    specialization = forms.CharField()
-    license_number = forms.IntegerField()
-    contact_number = forms.IntegerField()
-
-    class Meta:
-        model = Doctor
-        fields = ["name", "specialization" , "license_number","contact_number" ]
-        widgets = {
-                    'date_of_birth': DateInput(),
-                }
 
 class AppointmentForm(forms.ModelForm):
     class Meta:

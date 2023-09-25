@@ -26,8 +26,8 @@ class Receptionist(models.Model):
 
 
 class Doctor(models.Model):
-    username = models.CharField(max_length=15, default = "username")
-    password = models.CharField(max_length=15, default = "password123")
+    username = models.CharField(max_length=255, unique=True)
+    password = models.CharField(max_length=255, default = "123")
     # user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
     id = models.AutoField(primary_key=True)

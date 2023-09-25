@@ -37,7 +37,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id = "calender-form-1" method = "post" onkeydown = "return event.key != 'Enter'" enctype="multipart/form-data">
+                        <form id = "calender-form-1" method = "post" onkeydown = "return event.key != 'Enter'" enctype="multipart/form-data" style="padding: 20px;">
                             {% csrf_token %}
                             <p><strong>Selected Date: </strong><span id="selected-date"></span></p>
                             {{form | crispy}}

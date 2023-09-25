@@ -11,7 +11,11 @@ from django.contrib.auth.models import Group
 
 def home(request):
     appointments = Appointment.objects.all()
-    return render(request, "patient/home.html", {"appointments": appointments})
+    patient_total=Patient.objects.count()
+    doctor_total=Doctor.objects.count()
+    appointment_total=Appointment.objects.count()
+    hospital_total=Hospital.objects.count()
+    return render(request, "patient/home.html", {"appointments": appointments, "patient_total":patient_total, "doctor_total":doctor_total, "appointment_total":appointment_total, "hospital_total":hospital_total})
 
 def login(request):
     if request.user.is_authenticated():
@@ -82,6 +86,10 @@ def doctorinformation(request):
         license_number = request.POST.get("license_number")
         if Doctor.objects.filter(license_number = license_number).exists():
             messages.error(request,"License number is already taken")
+
+        username = request.POST.get("username")
+        if Doctor.objects.filter(username = username).exists():
+            messages.error(request,"username is already taken")
             
         else:
             if form.is_valid():
@@ -239,7 +247,12 @@ def appointment_list(request):
         form = AppointmentForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect("appointmentlist")
+        form = AppointmentForm()
+        appointments = Appointment.objects.all()
+        doctors = Doctor.objects.all()
+        patients = Patient.objects.all()
+
+        return render(request, 'appointments/appointment_list.html', {'appointments': appointments, "doctors":doctors,"patients" : patients, "form":form})
     else:
         form = AppointmentForm()
     appointments = Appointment.objects.all()
