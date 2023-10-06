@@ -20,6 +20,7 @@
 {% endblock extrascripts %}
 
 <br>
+{%if user.is_authenticated%}
 <div class="grey-bg container-fluid">
   <section id="minimal-statistics">
     <div class="row">
@@ -124,6 +125,6 @@
     </div>
   </section>
 </div>
-
+{%endif%}
 
 {% endblock %}
