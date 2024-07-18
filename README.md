@@ -1,6 +1,6 @@
 ﻿# DjangoEHR Project
 
-## Welcome to the DjangoEHR project! This is a dummy README file to help you get started with your Electronic Health Records (EHR) system built with Django.
+## Welcome to the DjangoEHR project! This is a dummy README file!
 
 ## Table of Contents
 
