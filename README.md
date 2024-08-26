@@ -1,6 +1,6 @@
 ﻿# DjangoEHR Project
 
-## Welcome to the DjangoEHR project! This is a dummy README file!
+## Welcome to the DjangoEHR project!
 
 ## Table of Contents
 
