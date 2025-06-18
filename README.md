@@ -86,12 +86,11 @@ We welcome contributions to DjangoEHR. To contribute, please follow these guidel
 
 ## License
 
-
-## Contact
-mohsinrazasipra@gmail.com
-
 This project is licensed under the MIT License - see the `LICENSE` file for details.
 
 Thank you for choosing DjangoEHR for your Electronic Health Records system. If you have any questions or need assistance, please don't hesitate to reach out to us.
 
 Happy coding!
+
+## Contact
+mohsinrazasipra@gmail.com
