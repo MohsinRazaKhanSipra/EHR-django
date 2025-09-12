@@ -1,4 +1,4 @@
-﻿# DjangoEHR Project
+﻿# DjangoEHR
 
 ## Welcome to the DjangoEHR project!
 
@@ -94,3 +94,4 @@ Happy coding!
 
 ## Contact
 mohsinrazasipra@gmail.com
+
