@@ -1,6 +1,6 @@
 ﻿# DjangoEHR
 
-## Welcome to the DjangoEHR project!
+## Welcome to the DjangoEHR project
 
 ## Table of Contents
 
@@ -94,4 +94,5 @@ Happy coding!
 
 ## Contact
 mohsinrazasipra@gmail.com
+
 
