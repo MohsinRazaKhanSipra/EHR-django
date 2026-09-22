@@ -1,4 +1,4 @@
-﻿# DjangoEHR
+﻿# DjangoEHR Documentation
 
 ## Welcome to the DjangoEHR project
 
